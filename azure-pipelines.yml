@@ -1,3 +1,46 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: Default  # Your agent pool name
+  demands:
+    - agent.name -equals DART  # Ensure it uses the DART agent
+
+parameters:
+  - name: repoName
+    type: string
+    default: 'gitpractice'
+  - name: branchName
+    type: string
+    default: 'main'
+  - name: imageTag
+    type: string
+    default: 'latest'
+
+jobs:
+- job: BuildAndPushDockerImage
+  displayName: 'Build and Push Docker Image'
+  pool: 
+    name: Default  # Replace with the pool containing your DART agent
+
+  steps:
+    - checkout: self
+
+    - task: Docker@2
+      displayName: 'Build and Push Docker Image'
+      inputs:
+        containerRegistry: 'mydockerhub'
+        repository: 'gitpractice'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile'
+        tags: $(imageTag)
+
+
+
+
+
 # trigger:
 #   branches:
 #     include:
@@ -8,51 +51,9 @@
 #   demands:
 #     - agent.name -equals DART
 
-# parameters:
-#   - name: repoName
-#     type: string
-#     default: 'gitpractice'
-#   - name: branchName
-#     type: string
-#     default: 'main'
-#   - name: imageTag
-#     type: string
-#     default: 'latest'
-
-# jobs:
-# - job: BuildAndPushDockerImage
-#   displayName: 'Build and Push Docker Image'
-#   pool:
-#     vmImage: 'ubuntu-latest'
-
-#   steps:
-#     - checkout: self
-
-#     - task: Docker@2
-#       displayName: 'Build and Push Docker Image'
-#       inputs:
-#         containerRegistry: 'mydockerhub'
-#         repository: 'gitpractice'
-#         command: 'buildAndPush'
-#         Dockerfile: '**/Dockerfile'
-#         tags: $(imageTag)
-
-
-
-
-trigger:
-  branches:
-    include:
-      - main
-
-pool:
-  name: Default
-  demands:
-    - agent.name -equals DART
-
-steps:
-  - script: echo "Hello World"
-    displayName: "Print Hello World"
+# steps:
+#   - script: echo "Hello World"
+#     displayName: "Print Hello World"
 
 
 
