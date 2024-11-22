@@ -35,7 +35,7 @@ jobs:
         repository: 'reddyaravind'
         command: 'buildAndPush'
         Dockerfile: 'Dockerfile'
-        tags: '$(imageTag)'
+        tags: $(imageTag)
 
 
 
