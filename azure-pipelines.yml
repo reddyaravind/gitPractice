@@ -44,13 +44,12 @@ trigger:
 - main  # Automatically triggers on pushes to the 'main' branch
 
 pool:
-  vmImage: 'ubuntu-latest'  # Use an Ubuntu agent
+  vmImage: 'ubuntu-latest'
 
 jobs:
 - job: HelloWorldJob
   displayName: "Hello World Job"
-  strategy:
-    parallel: 1  # Prevent parallel execution
   steps:
   - script: echo "Hello, World!"
     displayName: "Print Hello World"
+
