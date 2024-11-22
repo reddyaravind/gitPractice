@@ -1,23 +1,23 @@
 trigger:
   branches:
     include:
-      - main  # Trigger on commits to the main branch
+      - main
 
 pool:
-  name: Default  # Replace with the name of the agent pool where DART is configured
+  name: Default
   demands:
-    - agent.name -equals DART  # Specify that the DART agent should be used
+    - agent.name -equals DART
 
 parameters:
   - name: repoName
     type: string
-    default: 'gitpractice'  # Replace with your actual repo name
+    default: 'gitpractice'
   - name: branchName
     type: string
-    default: 'main'  # Replace with the default branch name (if needed)
+    default: 'main'
   - name: imageTag
     type: string
-    default: 'latest'  # Default image tag
+    default: 'latest'
 
 jobs:
 - job: BuildAndPushDockerImage
@@ -26,26 +26,17 @@ jobs:
     vmImage: 'ubuntu-latest'
 
   steps:
-    # Checkout the code from the repository
-    - checkout: self  # This checks out the current repository
-    
-    # Docker task to build and push the image
+    - checkout: self
+
     - task: Docker@2
       displayName: 'Build and Push Docker Image'
       inputs:
-        containerRegistry: 'mydockerhub'  # Service connection name
-        repository: 'gitpractice'  # DockerHub repository name
+        containerRegistry: 'mydockerhub'
+        repository: 'gitpractice'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: $(imageTag)  # Image tag defined by the parameter
+        tags: $(imageTag)
 
-# Ensure sequential execution by adding dependsOn
-- job: WaitForJobToComplete
-  dependsOn: BuildAndPushDockerImage
-  displayName: 'Wait for Build Job to Complete'
-  steps:
-    - script: echo 'Job completed successfully!'
-      displayName: 'Post-Build Task'
 
 
 
