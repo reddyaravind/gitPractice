@@ -41,12 +41,18 @@
 
 
 trigger:
-- main
+- main  # You can set this to any branch you want to trigger the pipeline on
 
 pool:
-  vmImage: ubuntu-latest
+  name: Default  # Replace with the name of the agent pool where DART is configured
+  demands:
+    - agent.name -equals DART  # Specify that the DART agent should be used
 
-steps:
-- task: Maven@3
+jobs:
+- job: HelloWorldJob
+  displayName: 'Print Hello World'
+  steps:
+  - task: AzureCLI@2
+    displayName: 'Print Hello World'
 
 
