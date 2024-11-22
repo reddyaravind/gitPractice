@@ -44,20 +44,9 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
-jobs:
-- job: SetupJob
-  displayName: "Setup Job"
-  steps:
-  - script: echo "Setting up resources"
-    displayName: "Setup"
-
-- job: HelloWorldJob
-  dependsOn: SetupJob
-  displayName: "Hello World Job"
-  steps:
-  - script: echo "Hello, World!"
-    displayName: "Print Hello World"
+steps:
+- task: Maven@3
 
 
