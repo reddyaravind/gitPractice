@@ -1,3 +1,45 @@
+# trigger:
+#   branches:
+#     include:
+#       - main
+
+# pool:
+#   name: Default
+#   demands:
+#     - agent.name -equals DART
+
+# parameters:
+#   - name: repoName
+#     type: string
+#     default: 'gitpractice'
+#   - name: branchName
+#     type: string
+#     default: 'main'
+#   - name: imageTag
+#     type: string
+#     default: 'latest'
+
+# jobs:
+# - job: BuildAndPushDockerImage
+#   displayName: 'Build and Push Docker Image'
+#   pool:
+#     vmImage: 'ubuntu-latest'
+
+#   steps:
+#     - checkout: self
+
+#     - task: Docker@2
+#       displayName: 'Build and Push Docker Image'
+#       inputs:
+#         containerRegistry: 'mydockerhub'
+#         repository: 'gitpractice'
+#         command: 'buildAndPush'
+#         Dockerfile: '**/Dockerfile'
+#         tags: $(imageTag)
+
+
+
+
 trigger:
   branches:
     include:
@@ -8,51 +50,9 @@ pool:
   demands:
     - agent.name -equals DART
 
-parameters:
-  - name: repoName
-    type: string
-    default: 'gitpractice'
-  - name: branchName
-    type: string
-    default: 'main'
-  - name: imageTag
-    type: string
-    default: 'latest'
+steps:
+  - script: echo "Hello World"
+    displayName: "Print Hello World"
 
-jobs:
-- job: BuildAndPushDockerImage
-  displayName: 'Build and Push Docker Image'
-  pool:
-    vmImage: 'ubuntu-latest'
-
-  steps:
-    - checkout: self
-
-    - task: Docker@2
-      displayName: 'Build and Push Docker Image'
-      inputs:
-        containerRegistry: 'mydockerhub'
-        repository: 'gitpractice'
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        tags: $(imageTag)
-
-
-
-
-# trigger:
-# - main  # You can set this to any branch you want to trigger the pipeline on
-
-# pool:
-#   name: Default  # Replace with the name of the agent pool where DART is configured
-#   demands:
-#     - agent.name -equals DART  # Specify that the DART agent should be used
-
-# jobs:
-# - job: HelloWorldJob
-#   displayName: 'Print Hello World'
-#   steps:
-#   - task: AzureCLI@2
-#     displayName: 'Print Hello World'
 
 
