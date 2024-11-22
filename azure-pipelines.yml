@@ -27,7 +27,11 @@ jobs:
 
   steps:
     - checkout: self
-
+    - task: Docker@2
+      displayName: 'Login to Docker Hub'
+      inputs:
+        containerRegistry: 'mydockerhub'  # Service connection name
+        command: 'login'
     - task: Docker@2
       displayName: 'Build and Push Docker Image'
       inputs:
