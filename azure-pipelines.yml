@@ -24,16 +24,11 @@ jobs:
   displayName: 'Build and Push Docker Image'
   pool:
     vmImage: 'ubuntu-latest'
-  
+
   steps:
     # Checkout the code from the repository
     - checkout: self  # This checks out the current repository
     
-    # If you're using a different repo:
-    # - checkout: 
-    #     repository: $(repoName)  # Use the repoName parameter here
-    #     ref: $(branchName)  # Optionally specify the branch to checkout
-
     # Docker task to build and push the image
     - task: Docker@2
       displayName: 'Build and Push Docker Image'
@@ -43,6 +38,15 @@ jobs:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(imageTag)  # Image tag defined by the parameter
+
+# Ensure sequential execution by adding dependsOn
+- job: WaitForJobToComplete
+  dependsOn: BuildAndPushDockerImage
+  displayName: 'Wait for Build Job to Complete'
+  steps:
+    - script: echo 'Job completed successfully!'
+      displayName: 'Post-Build Task'
+
 
 
 # trigger:
