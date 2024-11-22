@@ -34,8 +34,8 @@ jobs:
         containerRegistry: 'mydockerhub'
         repository: 'reddyaravind'
         command: 'buildAndPush'
-        Dockerfile: 'Dockerfile'
-        tags: reddyaravind:v1
+        Dockerfile: '**/Dockerfile'
+        tags: v1
 
 
 
