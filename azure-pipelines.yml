@@ -32,7 +32,7 @@ jobs:
       displayName: 'Build and Push Docker Image'
       inputs:
         containerRegistry: 'mydockerhub'
-        repository: 'gitpractice'
+        repository: 'reddyaravind'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: $(imageTag)
