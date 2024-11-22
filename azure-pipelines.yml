@@ -1,40 +1,56 @@
-trigger:
-  branches:
-    include:
-      - main  # Trigger on commits to the main branch
+# trigger:
+#   branches:
+#     include:
+#       - main  # Trigger on commits to the main branch
 
-parameters:
-  - name: repoName
-    type: string
-    default: 'gitpractice'  # Replace with your actual repo name
-  - name: branchName
-    type: string
-    default: 'main'  # Replace with the default branch name (if needed)
-  - name: imageTag
-    type: string
-    default: 'latest'  # Default image tag
+# parameters:
+#   - name: repoName
+#     type: string
+#     default: 'gitpractice'  # Replace with your actual repo name
+#   - name: branchName
+#     type: string
+#     default: 'main'  # Replace with the default branch name (if needed)
+#   - name: imageTag
+#     type: string
+#     default: 'latest'  # Default image tag
+
+# jobs:
+# - job: BuildAndPushDockerImage
+#   displayName: 'Build and Push Docker Image'
+#   pool:
+#     vmImage: 'ubuntu-latest'
+  
+#   steps:
+#     # Checkout the code from the repository
+#     - checkout: self  # This checks out the current repository
+    
+#     # If you're using a different repo:
+#     # - checkout: 
+#     #     repository: $(repoName)  # Use the repoName parameter here
+#     #     ref: $(branchName)  # Optionally specify the branch to checkout
+
+#     # Docker task to build and push the image
+#     - task: Docker@2
+#       displayName: 'Build and Push Docker Image'
+#       inputs:
+#         containerRegistry: 'mydockerhub'  # Service connection name
+#         repository: 'gitpractice'  # DockerHub repository name
+#         command: 'buildAndPush'
+#         Dockerfile: '**/Dockerfile'
+#         tags: $(imageTag)  # Image tag defined by the parameter
+
+
+trigger:
+- main  # Automatically triggers on pushes to the 'main' branch
+
+pool:
+  vmImage: 'ubuntu-latest'  # Use an Ubuntu agent
 
 jobs:
-- job: BuildAndPushDockerImage
-  displayName: 'Build and Push Docker Image'
-  pool:
-    vmImage: 'ubuntu-latest'
-  
+- job: HelloWorldJob
+  displayName: "Hello World Job"
+  strategy:
+    parallel: 1  # Prevent parallel execution
   steps:
-    # Checkout the code from the repository
-    - checkout: self  # This checks out the current repository
-    
-    # If you're using a different repo:
-    # - checkout: 
-    #     repository: $(repoName)  # Use the repoName parameter here
-    #     ref: $(branchName)  # Optionally specify the branch to checkout
-
-    # Docker task to build and push the image
-    - task: Docker@2
-      displayName: 'Build and Push Docker Image'
-      inputs:
-        containerRegistry: 'mydockerhub'  # Service connection name
-        repository: 'gitpractice'  # DockerHub repository name
-        command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile'
-        tags: $(imageTag)  # Image tag defined by the parameter
+  - script: echo "Hello, World!"
+    displayName: "Print Hello World"
