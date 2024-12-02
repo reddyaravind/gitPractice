@@ -39,8 +39,8 @@ jobs:
         repository: 'reddyaravind/gitpractice'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: v1
-        
+        tags: v5
+
 
 
 
