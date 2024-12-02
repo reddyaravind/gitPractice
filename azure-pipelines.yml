@@ -9,9 +9,6 @@ pool:
     - agent.name -equals DART  # Ensure it uses the DART agent
 
 parameters:
-  - name: repoName
-    type: string
-    default: 'gitpractice'
   - name: branchName
     type: string
     default: 'main'
@@ -39,7 +36,7 @@ jobs:
         repository: 'reddyaravind/gitpractice'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: v5
+        tags: ${{ parameters.imageTag }}
 
 
 
