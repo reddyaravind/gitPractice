@@ -39,7 +39,8 @@ jobs:
         repository: 'reddyaravind/gitpractice'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
-        tags: $(imageTag)
+        tags: v1
+        
 
 
 
